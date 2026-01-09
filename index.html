@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Al-Shammari | JavaScript Developer</title>
+  <meta property="og:title" content="Al-Shammari | JavaScript Developer" />
+  <meta property="og:description" content="Kuwait-based JavaScript developer crafting modern web experiences" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --bg: #ffffff;
+      --card-bg: #f8fafc;
+      --border: #e2e8f0;
+    }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    body.rtl {
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+    }
+    
+    body.dark {
+      --primary: #60a5fa;
+      --primary-dark: #3b82f6;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+    }
+    
+    body.dark nav {
+      background: rgba(15, 23, 42, 0.95);
+    }
+    
+    body.dark .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e1b4b 100%);
+    }
+    
+    body.dark .code-window {
+      background: #0f172a;
+      border: 1px solid #334155;
+    }
+    
+    body.dark .skills {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    }
+    
+    body.dark .skill-item,
+    body.dark .about-card {
+      background: #1e293b;
+      border-color: #334155;
+    }
+    
+    body.dark .btn-outline {
+      background: #1e293b;
+      border-color: #334155;
+      color: #f1f5f9;
+    }
+    
+    body.dark .social-link {
+      background: #1e293b;
+      border-color: #334155;
+    }
+    
+    body.dark footer {
+      border-color: #334155;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 16px 0;
+    }
+    
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a:hover { color: var(--primary); }
+    
+    .lang-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.3s, transform 0.2s;
+    }
+    
+    .lang-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #faf5ff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+    }
+    
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .hero-text h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    
+    .hero-text .name {
+      background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-text .subtitle {
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    
+    .hero-text p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      max-width: 500px;
+    }
+    
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+    }
+    
+    .btn {
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    }
+    
+    .btn-outline {
+      border: 2px solid var(--border);
+      color: var(--text);
+      background: white;
+    }
+    
+    .btn-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .code-window {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+    
+    .code-header {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    
+    .code-dot.red { background: #ef4444; }
+    .code-dot.yellow { background: #eab308; }
+    .code-dot.green { background: #22c55e; }
+    
+    .code-content {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.8;
+    }
+    
+    .code-keyword { color: #c084fc; }
+    .code-string { color: #86efac; }
+    .code-property { color: #93c5fd; }
+    .code-comment { color: #64748b; }
+    
+    /* About Section */
+    .about {
+      padding: 120px 0;
+      background: var(--bg);
+    }
+    
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    
+    .about-card {
+      background: var(--card-bg);
+      padding: 40px 32px;
+      border-radius: 16px;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    
+    .about-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+    
+    .about-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--primary) 0%, #8b5cf6 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 28px;
+    }
+    
+    .about-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+    
+    .about-card p {
+      color: var(--text-muted);
+    }
+    
+    /* Skills Section */
+    .skills {
+      padding: 120px 0;
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    }
+    
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    
+    .skill-item {
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    
+    .skill-item:hover {
+      border-color: var(--primary);
+      transform: scale(1.05);
+    }
+    
+    .skill-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+    }
+    
+    .skill-item h4 {
+      font-weight: 600;
+    }
+    
+    /* Contact Section */
+    .contact {
+      padding: 120px 0;
+      background: var(--bg);
+    }
+    
+    .contact-content {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .contact-content p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .social-link {
+      width: 56px;
+      height: 56px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .social-link:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-4px);
+    }
+    
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+    }
+    
+    .flag { font-size: 1.2rem; }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .hero-content { grid-template-columns: 1fr; text-align: center; }
+      .hero-text p { margin: 0 auto 32px; }
+      .hero-btns { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    
+    @media (max-width: 600px) {
+      .hero-text h1 { font-size: 2.5rem; }
+      .nav-links a { display: none; }
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <div class="logo" data-testid="logo">
+        <span class="en">Al-Shammari</span>
+        <span class="ar" style="display:none;">الشمري</span>
+      </div>
+      <div class="nav-links">
+        <a href="#hero" data-testid="nav-home">
+          <span class="en">Home</span>
+          <span class="ar" style="display:none;">الرئيسية</span>
+        </a>
+        <a href="#about" data-testid="nav-about">
+          <span class="en">About</span>
+          <span class="ar" style="display:none;">عني</span>
+        </a>
+        <a href="#skills" data-testid="nav-skills">
+          <span class="en">Skills</span>
+          <span class="ar" style="display:none;">المهارات</span>
+        </a>
+        <a href="#contact" data-testid="nav-contact">
+          <span class="en">Contact</span>
+          <span class="ar" style="display:none;">تواصل</span>
+        </a>
+        <button class="lang-btn" onclick="toggleLanguage()" data-testid="lang-toggle">
+          <span class="en">عربي</span>
+          <span class="ar" style="display:none;">English</span>
+        </button>
+        <button class="lang-btn" onclick="toggleTheme()" data-testid="theme-toggle" style="background: #1e293b;">
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>
+            <span class="en">Hello, I'm</span>
+            <span class="ar" style="display:none;">مرحباً، أنا</span>
+            <br>
+            <span class="name">
+              <span class="en">Al-Shammari</span>
+              <span class="ar" style="display:none;">الشمري</span>
+            </span>
+          </h1>
+          <div class="subtitle">
+            <span class="en">JavaScript Developer from Kuwait 🇰🇼</span>
+            <span class="ar" style="display:none;">مطور جافاسكربت من الكويت 🇰🇼</span>
+          </div>
+          <p>
+            <span class="en">I craft modern, responsive web applications with clean code and attention to detail. Passionate about creating seamless user experiences.</span>
+            <span class="ar" style="display:none;">أصمم تطبيقات ويب حديثة ومتجاوبة بكود نظيف واهتمام بالتفاصيل. شغوف بإنشاء تجارب مستخدم سلسة.</span>
+          </p>
+          <div class="hero-btns">
+            <a href="#contact" class="btn btn-primary" data-testid="btn-contact">
+              <span class="en">Get in Touch</span>
+              <span class="ar" style="display:none;">تواصل معي</span>
+            </a>
+            <a href="#skills" class="btn btn-outline" data-testid="btn-skills">
+              <span class="en">View Skills</span>
+              <span class="ar" style="display:none;">عرض المهارات</span>
+            </a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="code-window">
+            <div class="code-header">
+              <div class="code-dot red"></div>
+              <div class="code-dot yellow"></div>
+              <div class="code-dot green"></div>
+            </div>
+            <div class="code-content">
+              <span class="code-keyword">const</span> <span class="code-property">developer</span> = {<br>
+              &nbsp;&nbsp;<span class="code-property">name</span>: <span class="code-string">"Al-Shammari"</span>,<br>
+              &nbsp;&nbsp;<span class="code-property">location</span>: <span class="code-string">"Kuwait 🇰🇼"</span>,<br>
+              &nbsp;&nbsp;<span class="code-property">skills</span>: [<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"JavaScript"</span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"React"</span>,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">"Node.js"</span><br>
+              &nbsp;&nbsp;],<br>
+              &nbsp;&nbsp;<span class="code-property">passion</span>: <span class="code-string">"Building"</span><br>
+              };<br>
+              <br>
+              <span class="code-comment">// Ready to create! 🚀</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="en">About Me</span>
+        <span class="ar" style="display:none;">عني</span>
+      </h2>
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-icon">💻</div>
+          <h3>
+            <span class="en">Frontend Development</span>
+            <span class="ar" style="display:none;">تطوير الواجهات</span>
+          </h3>
+          <p>
+            <span class="en">Building responsive and interactive user interfaces with modern JavaScript frameworks.</span>
+            <span class="ar" style="display:none;">بناء واجهات مستخدم تفاعلية ومتجاوبة باستخدام أحدث أطر عمل جافاسكربت.</span>
+          </p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">⚡</div>
+          <h3>
+            <span class="en">Performance</span>
+            <span class="ar" style="display:none;">الأداء</span>
+          </h3>
+          <p>
+            <span class="en">Optimizing applications for speed and efficiency to deliver the best user experience.</span>
+            <span class="ar" style="display:none;">تحسين التطبيقات للسرعة والكفاءة لتقديم أفضل تجربة مستخدم.</span>
+          </p>
+        </div>
+        <div class="about-card">
+          <div class="about-icon">🎨</div>
+          <h3>
+            <span class="en">Clean Code</span>
+            <span class="ar" style="display:none;">كود نظيف</span>
+          </h3>
+          <p>
+            <span class="en">Writing maintainable, scalable, and well-documented code that teams love to work with.</span>
+            <span class="ar" style="display:none;">كتابة كود قابل للصيانة والتوسع وموثق جيداً يحب الفريق العمل معه.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <h2 class="section-title">
+        <span class="en">Technical Skills</span>
+        <span class="ar" style="display:none;">المهارات التقنية</span>
+      </h2>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <div class="skill-icon">🟨</div>
+          <h4>JavaScript</h4>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">⚛️</div>
+          <h4>React</h4>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">🟢</div>
+          <h4>Node.js</h4>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">🔷</div>
+          <h4>TypeScript</h4>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">🎨</div>
+          <h4>CSS/Tailwind</h4>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">📦</div>
+          <h4>npm/Webpack</h4>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">🔀</div>
+          <h4>Git</h4>
+        </div>
+        <div class="skill-item">
+          <div class="skill-icon">🗄️</div>
+          <h4>REST APIs</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-content">
+        <h2 class="section-title">
+          <span class="en">Let's Connect</span>
+          <span class="ar" style="display:none;">لنتواصل</span>
+        </h2>
+        <p>
+          <span class="en">Interested in working together? Feel free to reach out!</span>
+          <span class="ar" style="display:none;">مهتم بالعمل معاً؟ لا تتردد في التواصل!</span>
+        </p>
+        <div class="social-links">
+          <a href="https://discord.gg/XrZB4QKES6" target="_blank" class="social-link" data-testid="social-discord">🎮</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 1.1rem; color: var(--text-muted);">
+          <span class="en">Discord: <strong style="color: var(--primary);">2_zr</strong></span>
+          <span class="ar" style="display:none;">ديسكورد: <strong style="color: var(--primary);">2_zr</strong></span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>
+        <span class="en">© 2026 Al-Shammari. Made with ❤️ in Kuwait <span class="flag">🇰🇼</span></span>
+        <span class="ar" style="display:none;">© 2026 الشمري. صنع بـ ❤️ في الكويت <span class="flag">🇰🇼</span></span>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    let isArabic = false;
+    let isDark = false;
+    
+    function toggleTheme() {
+      isDark = !isDark;
+      const body = document.body;
+      const themeIcon = document.querySelector('.theme-icon');
+      const themeBtn = document.querySelector('[data-testid="theme-toggle"]');
+      
+      if (isDark) {
+        body.classList.add('dark');
+        themeIcon.textContent = '☀️';
+        themeBtn.style.background = '#f59e0b';
+      } else {
+        body.classList.remove('dark');
+        themeIcon.textContent = '🌙';
+        themeBtn.style.background = '#1e293b';
+      }
+    }
+    
+    function toggleLanguage() {
+      isArabic = !isArabic;
+      const html = document.documentElement;
+      const body = document.body;
+      
+      if (isArabic) {
+        html.setAttribute('lang', 'ar');
+        html.setAttribute('dir', 'rtl');
+        body.classList.add('rtl');
+      } else {
+        html.setAttribute('lang', 'en');
+        html.setAttribute('dir', 'ltr');
+        body.classList.remove('rtl');
+      }
+      
+      document.querySelectorAll('.en').forEach(el => {
+        el.style.display = isArabic ? 'none' : 'inline';
+      });
+      
+      document.querySelectorAll('.ar').forEach(el => {
+        el.style.display = isArabic ? 'inline' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
